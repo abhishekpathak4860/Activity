@@ -1,0 +1,41 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Users\Asus\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.5.2
+2 info using node@v22.17.0
+3 silly config load:file:C:\Users\Asus\AppData\Roaming\npm\node_modules\npm\npmrc
+4 silly config load:file:D:\Projects\activity\frontend\.npmrc
+5 silly config load:file:C:\Users\Asus\.npmrc
+6 silly config load:file:C:\Users\Asus\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm exec create-next-app@latest
+8 verbose argv "exec" "--" "create-next-app@latest"
+9 verbose logfile logs-max:10 dir:D:\Projects\activity\frontend\npm-cache\_logs\2026-02-01T06_35_04_801Z-
+10 verbose logfile D:\Projects\activity\frontend\npm-cache\_logs\2026-02-01T06_35_04_801Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+13 http fetch GET 200 https://registry.npmjs.org/npm 696ms
+14 http fetch GET 200 https://registry.npmjs.org/create-next-app 708ms (cache miss)
+15 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+16 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+17 silly idealTree buildDeps
+18 silly fetch manifest create-next-app@16.1.6
+19 silly packumentCache full:https://registry.npmjs.org/create-next-app cache-miss
+20 http fetch GET 200 https://registry.npmjs.org/create-next-app 453ms (cache miss)
+21 silly packumentCache full:https://registry.npmjs.org/create-next-app set size:undefined disposed:false
+22 silly placeDep ROOT create-next-app@16.1.6 OK for:  want: 16.1.6
+23 silly reify moves {}
+24 silly audit bulk request { 'create-next-app': [ '16.1.6' ] }
+25 http cache create-next-app@https://registry.npmjs.org/create-next-app/-/create-next-app-16.1.6.tgz 1ms (cache hit)
+26 silly tarball no local data for create-next-app@https://registry.npmjs.org/create-next-app/-/create-next-app-16.1.6.tgz. Extracting by manifest.
+27 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 423ms
+28 silly audit report {}
+29 http fetch GET 200 https://registry.npmjs.org/create-next-app/-/create-next-app-16.1.6.tgz 674ms (cache miss)
+30 verbose cwd D:\Projects\activity\frontend
+31 verbose os Windows_NT 10.0.22631
+32 verbose node v22.17.0
+33 verbose npm  v11.5.2
+34 notice
+34 notice New [33mminor[39m version of npm available! [33m11.5.2[39m -> [34m11.8.0[39m
+34 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.8.0[39m
+34 notice To update run: [4mnpm install -g npm@11.8.0[24m
+34 notice  { force: true, [Symbol(proc-log.meta)]: true }
+35 verbose exit 0
+36 info ok

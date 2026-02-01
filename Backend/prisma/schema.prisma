@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id             String   @id @default(uuid())
+  actor_id       String // Action karne wala (User A/B)
+  verb           String // LIKE, FOLLOW, etc.
+  object_type    String // POST, COMMENT
+  object_id      String // Specific item ID
+  target_user_id String // Jisko notification milega
+  created_at     DateTime @default(now())
+
+  // Indexing for performance (Requirement: P95 feed should be fast)
+  @@index([target_user_id, created_at(sort: Desc)])
+  @@index([created_at])
+}
