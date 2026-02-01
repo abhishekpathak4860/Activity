@@ -13,7 +13,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (userId) {
       // Backend URL (Default port 3001)
-      const newSocket = io("http://localhost:3001", {
+      const newSocket = io(process.env.NEXT_PUBLIC_BACKEND_URL, {
         query: { user_id: userId },
       });
 
