@@ -9,11 +9,11 @@ datasource db {
 
 model Event {
   id             String   @id @default(uuid())
-  actor_id       String // Action karne wala (User A/B)
-  verb           String // LIKE, FOLLOW, etc.
-  object_type    String // POST, COMMENT
-  object_id      String // Specific item ID
-  target_user_id String // Jisko notification milega
+  actor_id       String
+  verb           String
+  object_type    String
+  object_id      String
+  target_user_id String
   created_at     DateTime @default(now())
 
   // Indexing for performance (Requirement: P95 feed should be fast)

@@ -15,7 +15,6 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 
-// Routes - Hum io pass kar rahe hain taaki controller use kar sake
 app.use("/api/events", eventRoutes(io));
 
 io.on("connection", (socket) => {

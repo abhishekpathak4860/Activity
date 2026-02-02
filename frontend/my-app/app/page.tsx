@@ -13,6 +13,7 @@ export default function Home() {
   const [trending, setTrending] = useState<any[]>([]);
   const [cursor, setCursor] = useState<string | null>(null);
   const [timeWindow, setTimeWindow] = useState("1m");
+  const [isLoading, setIsLoading] = useState(false); // New Loading State
   const socket = useSocket();
 
   useEffect(() => {
@@ -27,6 +28,8 @@ export default function Home() {
   const fetchFeed = async (isLoadMore = false) => {
     const userId = localStorage.getItem("current_user");
     if (!userId) return;
+
+    setIsLoading(true); // Start Loading
     try {
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events/feed?user_id=${userId}${cursor && isLoadMore ? `&cursor=${cursor}` : ""}`;
       const response = await axios.get(url);
@@ -38,6 +41,8 @@ export default function Home() {
       setCursor(response.data.next_cursor);
     } catch (error) {
       console.error("Error fetching feed:", error);
+    } finally {
+      setIsLoading(false); // Stop Loading
     }
   };
 
@@ -74,7 +79,7 @@ export default function Home() {
     window.location.reload();
   };
 
-  // --- LANDING PAGE VIEW ---
+  // LANDING PAGE VIEW
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6 text-black">
@@ -104,7 +109,7 @@ export default function Home() {
     );
   }
 
-  // --- MAIN DASHBOARD VIEW ---
+  // MAIN DASHBOARD VIEW
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-black">
       <Header />
@@ -113,17 +118,25 @@ export default function Home() {
         <section className="lg:col-span-7 bg-white border-2 border-black rounded-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
           <div className="p-4 border-b-2 border-black bg-blue-50 flex justify-between items-center">
             <h2 className="font-black uppercase italic tracking-tighter">
-              Your Activity Stream are right here
+              Your Activity Stream
             </h2>
             <button
               onClick={() => fetchFeed()}
-              className="text-xs font-black bg-black text-white px-3 py-1 rounded-full uppercase"
+              disabled={isLoading}
+              className={`text-xs font-black bg-black text-white px-3 py-1 rounded-full uppercase ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
             >
-              Refresh
+              {isLoading ? "Fetching..." : "Refresh"}
             </button>
           </div>
           <div className="p-4 space-y-4 overflow-y-auto max-h-[700px]">
-            {feedItems.length === 0 ? (
+            {isLoading && feedItems.length === 0 ? (
+              <div className="flex flex-col items-center justify-center p-12 space-y-4">
+                <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="font-black uppercase italic animate-pulse">
+                  Waking up Render backend...
+                </p>
+              </div>
+            ) : feedItems.length === 0 ? (
               <div className="p-12 border-2 border-dashed border-black text-center font-bold italic opacity-40">
                 No records found...
               </div>
@@ -148,9 +161,10 @@ export default function Home() {
             {cursor && (
               <button
                 onClick={() => fetchFeed(true)}
-                className="w-full py-4 bg-black text-white font-black uppercase hover:bg-gray-800"
+                disabled={isLoading}
+                className="w-full py-4 bg-black text-white font-black uppercase hover:bg-gray-800 disabled:bg-gray-600"
               >
-                Load More History
+                {isLoading ? "Loading Data..." : "Load More History"}
               </button>
             )}
           </div>

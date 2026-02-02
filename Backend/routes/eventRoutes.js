@@ -7,7 +7,6 @@ import {
 
 const router = express.Router();
 
-// Hamein 'io' instance controller tak pahunchana hoga
 export default (io) => {
   router.post("/", (req, res) => createEvent(req, res, io));
   router.get("/feed", getFeed);

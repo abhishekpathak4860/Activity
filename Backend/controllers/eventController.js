@@ -7,7 +7,7 @@ export const createEvent = async (req, res, io) => {
   try {
     const { actor_id, verb, object_type, object_id, target_user_id } = req.body;
 
-    // Idempotency Check: Same user, same action, same object within last 5 seconds
+    // Idempotency Check
     const existingEvent = await prisma.event.findFirst({
       where: {
         actor_id,
@@ -21,10 +21,9 @@ export const createEvent = async (req, res, io) => {
 
     if (existingEvent) {
       console.log("Duplicate event detected, skipping...");
-      return res.status(200).json(existingEvent); // Purana hi return kar do, naya mat banao
+      return res.status(200).json(existingEvent);
     }
 
-    // Naya event save karo
     const newEvent = await prisma.event.create({
       data: { actor_id, verb, object_type, object_id, target_user_id },
     });
@@ -36,7 +35,7 @@ export const createEvent = async (req, res, io) => {
   }
 };
 
-// GET Feed Logic (Cursor-based Pagination)
+// GET Feed  (Cursor-based Pagination)
 export const getFeed = async (req, res) => {
   try {
     const { user_id, cursor, limit = 10 } = req.query;
@@ -45,7 +44,7 @@ export const getFeed = async (req, res) => {
 
     const items = await prisma.event.findMany({
       take: parseInt(limit),
-      // Agar cursor hai, toh wahan se start karo, warna shuru se
+
       ...(cursor && { skip: 1, cursor: { id: cursor } }),
       where: { target_user_id: user_id },
       orderBy: { created_at: "desc" }, // Newest first
@@ -68,7 +67,6 @@ export const getAnalytics = async (req, res) => {
   try {
     const { window = "1m" } = req.query; // Default 1 minute
 
-    // Time logic calculate karna
     const now = new Date();
     let timeLimit = new Date();
 

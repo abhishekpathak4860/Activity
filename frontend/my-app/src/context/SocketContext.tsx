@@ -8,7 +8,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    // Local storage se current user uthao
+    //get current users from local storage
     const userId = localStorage.getItem("current_user");
 
     if (userId) {
